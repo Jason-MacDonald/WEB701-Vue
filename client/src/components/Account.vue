@@ -2,17 +2,22 @@
   <v-flex sm8 xs10 offset-sm2 offset-xs1>
     <v-card>
       <v-toolbar dark>
-        <v-toolbar-title>New Message</v-toolbar-title>
+        <v-toolbar-title>Account</v-toolbar-title>
       </v-toolbar>
       <v-form>
         <v-container>
           <v-row>
             <v-col cols="12" md="12">
-              <v-text-field label="Message" v-model="messageBody" required></v-text-field>
+              <v-text-field
+                label="User Name"
+                v-model="username"
+                required
+                v-bind:placeholder="this.$store.state.account.username"
+              ></v-text-field>
             </v-col>
           </v-row>
         </v-container>
-        <v-btn class="mr-4" @click="submit">submit</v-btn>
+        <v-btn class="mr-4" @click="submit">Update Account Info</v-btn>
       </v-form>
     </v-card>
   </v-flex>
@@ -20,21 +25,23 @@
 
 <script>
 export default {
-  name: "newmessage",
+  name: "account",
   data() {
     return {
-      messageBody: ""
+      username: ""
     };
   },
   methods: {
     async submit() {
       try {
-        this.$store.dispatch("newMessage", this.messageBody);
+        this.$store.dispatch("updateAccount", this.username);
       } catch (error) {
         console.error(error);
       }
-      this.messageBody = "";
     }
+  },
+  async created() {
+    this.$store.dispatch("getAccount");
   }
 };
 </script>

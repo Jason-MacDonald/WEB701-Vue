@@ -22,6 +22,20 @@ app.get("/messages/:id", (req, res) => {
   res.send(messages[req.params.id]);
 });
 
+app.get("/account", (req, res) => {
+  const token = req.header("Authorization");
+  const userID = jwt.decode(token, 123);
+  console.log(users[userID]);
+  res.send(users[userID]);
+});
+
+app.post("/account", (req, res) => {
+  const token = req.header("Authorization");
+  const userID = jwt.decode(token, 123);
+  users[userID].username = req.body.username;
+  console.log(users[userID].username);
+});
+
 app.post("/messages", (req, res) => {
   const token = req.header("Authorization");
   const userID = jwt.decode(token, 123);
@@ -35,15 +49,13 @@ app.post("/register", (req, res) => {
   let registerData = req.body;
   let newIndex = users.push(registerData);
   let userID = newIndex - 1;
-
   let token = jwt.sign(userID, "123");
   res.json(token);
 });
 
 app.post("/login", (req, res) => {
   let loginData = req.body;
-  let userID = users.findIndex(user => user.username == loginData.username);
-  console.log(userID);
+  let userID = users.findIndex((user) => user.username == loginData.username);
 
   if (userID == -1) {
     return res.status(401).send({ message: "Name or password is invalid" });

@@ -8,6 +8,7 @@ import Message from "./components/Message";
 import NewMessage from "./components/NewMessage";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Account from "./components/Account";
 import VueRouter from "vue-router";
 
 Vue.use(vueRouter);
@@ -15,24 +16,28 @@ Vue.use(vueRouter);
 const routes = [
   {
     path: "/",
-    component: Login
+    component: Login,
   },
   {
     path: "/NewMessage",
-    component: NewMessage
+    component: NewMessage,
   },
   {
     path: "/Message/:id",
-    component: Message
+    component: Message,
   },
   {
     path: "/Register",
-    component: Register
+    component: Register,
   },
   {
     path: "/Messages",
-    component: Messages
-  }
+    component: Messages,
+  },
+  {
+    path: "/Account",
+    component: Account,
+  },
 ];
 
 const router = new VueRouter({ routes, mode: "history" });
@@ -43,5 +48,5 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

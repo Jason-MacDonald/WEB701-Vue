@@ -6,9 +6,8 @@
       <v-spacer />
       <v-btn v-if="!$store.state.token" text to="/Register">Register</v-btn>
       <v-btn v-if="!$store.state.token" text to="/">Login</v-btn>
-      <v-btn v-if="$store.state.token" text @click="$store.commit('logout')"
-        >Logout</v-btn
-      >
+      <v-btn v-if="$store.state.token" text to="/Account">Account</v-btn>
+      <v-btn v-if="$store.state.token" text @click="$store.commit('logout')">Logout</v-btn>
     </v-app-bar>
     <br />
     <v-content>
