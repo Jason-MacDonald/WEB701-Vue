@@ -1,60 +1,51 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
     <v-content>
-      <HelloWorld/>
+      <h3 class="mt-5 ml-5">Add New Auction Form</h3>
+
+      <v-row class="px-5">
+        <v-text-field
+          class="mx-5"
+          v-model="name"
+          label="Item Name"
+          hide-details="auto"
+        ></v-text-field>
+        <v-text-field
+          class="mx-5"
+          v-model="description"
+          label="Item Description"
+        ></v-text-field>
+        <v-btn class="mx-5" @click="addAuction">Add Auction Item</v-btn>
+      </v-row>
+      <h3 class="mt-5 ml-5">Auction Items</h3>
+
+      <div v-for="(item, index) in this.$store.state.auctions" :key="index">
+        <v-row class="px-5">
+          <v-text-field class="px-5" type="text" :value="item.name" />
+          <v-text-field class="px-5" type="text" :value="item.description" />
+        </v-row>
+      </div>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
 export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
+  name: "App",
 
   data: () => ({
-    //
+    name: "",
+    description: "",
+    auctions: [],
   }),
+  methods: {
+    addAuction() {
+      let item = {
+        name: this.name,
+        description: this.description,
+      };
+      this.$store.dispatch("addAuction", item);
+    },
+  },
 };
 </script>
